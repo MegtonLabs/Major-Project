@@ -1,0 +1,44 @@
+{
+    "input_file": "9ab8eeb8-Screenshot-997-_png.rf.41d1e6855fcc9bbbb889e68783b86c2e.jpg",
+    "orientation_fixed": "0 degrees",
+    "extracted_fields": {
+        "ACCOUNT": {
+            "text": "290062 0 836 5 5",
+            "confidence": 0.8959347571393204,
+            "bbox": [
+                223,
+                651,
+                563,
+                713
+            ]
+        },
+        "BANK_NAME": {
+            "text": "SyndicateBank",
+            "bbox": [
+                264,
+                88,
+                503,
+                132
+            ]
+        },
+        "PAYEE_NAME": {
+            "text": "6_ Je= 3knA L~a Peddy 4&Rd & r Bearer",
+            "bbox": [
+                628,
+                182,
+                1850,
+                248
+            ]
+        },
+        "SIGNATURE_ROI": {
+            "text": "[Region Above Label]",
+            "bbox": [
+                1460,
+                600,
+                1892,
+                707
+            ]
+        }
+    },
+    "layoutlm_output_shape": "torch.Size([1, 512, 2])"
+}

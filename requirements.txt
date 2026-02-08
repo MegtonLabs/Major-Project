@@ -1,0 +1,17 @@
+# PyTorch (INSTALL MANUALLY WITH CUDA SUPPORT)
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+easyocr
+opencv-python
+gymnasium
+stable-baselines3[extra]
+transformers
+datasets
+pillow
+numpy
+pandas
+matplotlib
+tqdm
+tensorboard
+accelerate
+shimmy>=1.0.0

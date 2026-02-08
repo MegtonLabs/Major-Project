@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementation Progress Tracker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section-title {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            transition: background 0.2s;
+        }
+        .task-item:hover {
+            background-color: #f8f9fa;
+        }
+        .checkbox {
+            margin-right: 15px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        .task-text {
+            flex-grow: 1;
+        }
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .pending { background: #ffeeba; color: #856404; }
+        .in-progress { background: #b8daff; color: #004085; }
+        .completed { background: #c3e6cb; color: #155724; }
+        
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .stat-box {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        /* Data Summary */
+        .data-summary {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .save-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 12px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            text-align: center;
+        }
+        .save-btn:hover { background: #218838; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Project Implementation Tracker</h1>
+    <p style="text-align: center; color: #666;">Semi-Supervised Document Field Extraction with RL</p>
+
+    <div class="stats">
+        <div class="stat-box">
+            <div class="stat-number" id="progress-percent">0%</div>
+            <div>Completion</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">8</div>
+            <div>Weeks Remaining</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">125</div>
+            <div>Total Images</div>
+        </div>
+    </div>
+
+    <div class="data-summary">
+        <strong>📂 Dataset Status:</strong><br>
+        • Unlabeled Cheques: 124<br>
+        • RBI Specimen: 1 (Reference)
+    </div>
+
+    <!-- Phase 1 -->
+    <div class="section">
+        <div class="section-title">Week 1-2: Environment & Baseline (The Foundation)</div>
+        
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task1" onclick="updateProgress()" checked>
+            <div class="task-text">Create Project Structure & Virtual Environment</div>
+            <span class="status-badge completed" id="badge1">Done</span>
+        </div>
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task2" onclick="updateProgress()" checked>
+            <div class="task-text">Install Dependencies (PyTorch, Transformers, EasyOCR/PaddleOCR)</div>
+            <span class="status-badge completed" id="badge2">Done</span>
+        </div>
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task3" onclick="updateProgress()" checked>
+            <div class="task-text">Implement Data Loader for Unlabeled Images</div>
+            <span class="status-badge completed" id="badge3">Done</span>
+        </div>
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task4" onclick="updateProgress()" checked>
+            <div class="task-text">Baseline 1: Run Pre-trained LayoutLMv3 (Zero-shot)</div>
+            <span class="status-badge completed" id="badge4">Done</span>
+        </div>
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task5" onclick="updateProgress()" checked>
+            <div class="task-text">Baseline 2: Implement Rule-based Extraction (Regex)</div>
+            <span class="status-badge completed" id="badge5">Done</span>
+        </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="section">
+        <div class="section-title">Week 3-4: Self-Supervised Pre-training (The Brain)</div>
+        
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task6" onclick="updateProgress()">
+            <div class="task-text">Implement Masked Image Modeling (MIM) Pipeline</div>
+            <span class="status-badge pending" id="badge6">Pending</span>
+        </div>
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task7" onclick="updateProgress()">
+            <div class="task-text">Train LayoutLMv3 on 124 Unlabeled Cheques</div>
+            <span class="status-badge pending" id="badge7">Pending</span>
+        </div>
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task8" onclick="updateProgress()">
+            <div class="task-text">Evaluate Representation Quality (Visual Inspection)</div>
+            <span class="status-badge pending" id="badge8">Pending</span>
+        </div>
+    </div>
+
+    <!-- Phase 2.5 (New Request) -->
+    <div class="section">
+        <div class="section-title">Week 5: RL Detection Agent (The "Hunter")</div>
+        
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task_rl_env" onclick="updateProgress()">
+            <div class="task-text">Create "Photographer" Gym Environment (Actions: Zoom, Pan, Contrast)</div>
+            <span class="status-badge pending" id="badge_rl_env">Pending</span>
+        </div>
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task_rl_reward" onclick="updateProgress()">
+            <div class="task-text">Implement Unsupervised Reward Function (Regex Validity Score)</div>
+            <span class="status-badge pending" id="badge_rl_reward">Pending</span>
+        </div>
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task_rl_train" onclick="updateProgress()">
+            <div class="task-text">Train PPO Agent (Stable-Baselines3) to isolate fields in complex backgrounds</div>
+            <span class="status-badge pending" id="badge_rl_train">Pending</span>
+        </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="section">
+        <div class="section-title">Week 6: RL Curriculum Learning (The Optimizer)</div>
+        
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task9" onclick="updateProgress()">
+            <div class="task-text">Define RL State Space (Validation Accuracy, Loss)</div>
+            <span class="status-badge pending" id="badge9">Pending</span>
+        </div>
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task10" onclick="updateProgress()">
+            <div class="task-text">Define Action Space (Select Data Batch)</div>
+            <span class="status-badge pending" id="badge10">Pending</span>
+        </div>
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task11" onclick="updateProgress()">
+            <div class="task-text">Implement PPO Agent using Stable-Baselines3</div>
+            <span class="status-badge pending" id="badge11">Pending</span>
+        </div>
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task12" onclick="updateProgress()">
+            <div class="task-text">Integrate RL Agent with Training Loop</div>
+            <span class="status-badge pending" id="badge12">Pending</span>
+        </div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div class="section">
+        <div class="section-title">Week 7-8: Analysis & Paper Writing (The Deliverable)</div>
+        
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task13" onclick="updateProgress()">
+            <div class="task-text">Run Ablation Studies (With vs Without RL)</div>
+            <span class="status-badge pending" id="badge13">Pending</span>
+        </div>
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task14" onclick="updateProgress()">
+            <div class="task-text">Generate Performance Graphs (Accuracy/Loss Curves)</div>
+            <span class="status-badge pending" id="badge14">Pending</span>
+        </div>
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task15" onclick="updateProgress()">
+            <div class="task-text">Write Methodology Section</div>
+            <span class="status-badge pending" id="badge15">Pending</span>
+        </div>
+        <div class="task-item">
+            <input type="checkbox" class="checkbox" id="task16" onclick="updateProgress()">
+            <div class="task-text">Final Paper Polish & Formatting</div>
+            <span class="status-badge pending" id="badge16">Pending</span>
+        </div>
+    </div>
+
+    <button class="save-btn" onclick="window.print()">💾 Save Progress (Print to PDF)</button>
+</div>
+
+<script>
+    function updateProgress() {
+        const checkboxes = document.querySelectorAll('.checkbox');
+        const total = checkboxes.length;
+        let checked = 0;
+
+        checkboxes.forEach((box, index) => {
+            const badge = document.getElementById('badge' + (index + 1));
+            if (box.checked) {
+                checked++;
+                badge.className = 'status-badge completed';
+                badge.innerText = 'Done';
+            } else {
+                badge.className = 'status-badge pending';
+                badge.innerText = 'Pending';
+            }
+        });
+
+        const percentage = Math.round((checked / total) * 100);
+        document.getElementById('progress-percent').innerText = percentage + '%';
+        
+        // Save state to local storage (simple persistence)
+        const state = Array.from(checkboxes).map(box => box.checked);
+        localStorage.setItem('projectProgress', JSON.stringify(state));
+    }
+
+    // Load state
+    window.onload = function() {
+        const saved = JSON.parse(localStorage.getItem('projectProgress'));
+        if (saved) {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            checkboxes.forEach((box, i) => {
+                box.checked = saved[i];
+            });
+            updateProgress();
+        }
+    }
+</script>
+
+</body>
+</html>

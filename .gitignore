@@ -1,0 +1,26 @@
+# Environments
+venv/
+env/
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Dataset (Too large for GitHub)
+data/cheques/
+data/processed/
+
+# Models (Download these locally)
+models/
+
+# Testing & Sandbox
+testing_sandbox/
+*.log
+
+# IDEs
+.vscode/
+.idea/
+
+# Experiments (Optional: Keep logs, ignore large files if any)
+# experiments/

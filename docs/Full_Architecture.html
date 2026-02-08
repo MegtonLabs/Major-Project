@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMGR-Net: Comprehensive Architecture</title>
+    <style>
+        @media print {
+            body { font-size: 11pt; -webkit-print-color-adjust: exact; }
+            .no-print { display: none; }
+            .page-break { page-break-before: always; }
+        }
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px;
+            background: #f8f9fa;
+        }
+        h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 15px; text-align: center; }
+        h2 { color: #2980b9; margin-top: 40px; border-left: 5px solid #3498db; padding-left: 15px; background: #e8f6f3; padding-top: 10px; padding-bottom: 10px; }
+        h3 { color: #16a085; margin-top: 30px; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+        
+        .diagram-box {
+            background: white;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .flow-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .node {
+            background: #fff;
+            border: 2px solid #34495e;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+            position: relative;
+        }
+        .node-title { font-weight: bold; display: block; margin-bottom: 5px; color: #2c3e50; }
+        .node-desc { font-size: 0.85em; color: #7f8c8d; }
+        
+        .arrow { font-size: 24px; color: #7f8c8d; font-weight: bold; }
+        
+        /* Specific Colors */
+        .c-input { border-color: #3498db; background: #ebf5fb; }
+        .c-ocr { border-color: #e67e22; background: #fdf2e9; }
+        .c-graph { border-color: #9b59b6; background: #f4ecf7; }
+        .c-agent { border-color: #2ecc71; background: #eafaf1; }
+        .c-output { border-color: #e74c3c; background: #fdedec; }
+
+        .agent-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .agent-card {
+            background: white;
+            border-top: 4px solid #34495e;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .layer-stack {
+            border: 1px solid #ddd;
+            background: #fdfdfd;
+            padding: 10px;
+            margin: 5px 0;
+            text-align: center;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        .math-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="no-print" onclick="window.print()" style="position:fixed; top:20px; right:20px; padding:10px 20px; background:#e74c3c; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">📥 Save as PDF</button>
+
+    <h1>CMGR-Net: Collaborative Multi-Agent Graph Reasoning Network</h1>
+    <p style="text-align: center; font-size: 1.1em; color: #555;">
+        <strong>Unsupervised Layout-Invariant Cheque Processing System</strong><br>
+        <em>Designed for MCA Major Project | Feb 2026</em>
+    </p>
+
+    <h2>1. Overall System Data Flow</h2>
+    <p>The system transforms a raw pixel image into a semantic graph, which is then traversed by a team of collaborative agents to extract structured data.</p>
+
+    <div class="diagram-box">
+        <div class="flow-container">
+            <div class="node c-input">
+                <span class="node-title">Input Layer</span>
+                <span class="node-desc">Raw Cheque Image<br>(RGB Pixels)</span>
+            </div>
+            <div class="arrow">➜</div>
+            <div class="node c-ocr">
+                <span class="node-title">Sensing Layer</span>
+                <span class="node-desc">OCR (Pre-trained)<br>Text + BBox Detection</span>
+            </div>
+            <div class="arrow">➜</div>
+            <div class="node c-graph">
+                <span class="node-title">Graph Construction</span>
+                <span class="node-desc">Spatial-Semantic Graph<br>(Nodes=Words, Edges=Dist)</span>
+            </div>
+            <div class="arrow">➜</div>
+            <div class="node c-agent">
+                <span class="node-title">Multi-Agent System</span>
+                <span class="node-desc">Explorer + Composer + Auditor<br>(RL Policy Network)</span>
+            </div>
+            <div class="arrow">➜</div>
+            <div class="node c-output">
+                <span class="node-title">Extraction Layer</span>
+                <span class="node-desc">Structured JSON<br>{IFSC, MICR, A/C}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>2. Multi-Agent Architecture (The Core Innovation)</h2>
+    <p>We deploy three specialized agents that share a common Graph Neural Network (GNN) encoder but have distinct Policy Heads (Actor-Critic).</p>
+
+    <div class="agent-grid">
+        <!-- Agent 1 -->
+        <div class="agent-card" style="border-top-color: #e74c3c;">
+            <h3>🕵️ Agent 1: The Explorer</h3>
+            <p><strong>Role:</strong> Layout Analysis & RoI Discovery</p>
+            <div class="layer-stack">Input: Full Graph G(V, E)</div>
+            <div class="layer-stack">Action: Select Start Node</div>
+            <div class="layer-stack">Policy: GCN + Masked Softmax</div>
+            <p><strong>Goal:</strong> Finds "Anchor" nodes (e.g., "IFS CODE" label) to orient the search.</p>
+        </div>
+
+        <!-- Agent 2 -->
+        <div class="agent-card" style="border-top-color: #f39c12;">
+            <h3>🧩 Agent 2: The Composer</h3>
+            <p><strong>Role:</strong> Semantic Grouping</p>
+            <div class="layer-stack">Input: Explorer's RoI</div>
+            <div class="layer-stack">Action: Link/Merge Nodes</div>
+            <div class="layer-stack">Policy: Edge Attention</div>
+            <p><strong>Goal:</strong> Merges fragmented OCR tokens (e.g., "S BI N" → "SBIN").</p>
+        </div>
+
+        <!-- Agent 3 -->
+        <div class="agent-card" style="border-top-color: #2ecc71;">
+            <h3>✅ Agent 3: The Auditor</h3>
+            <p><strong>Role:</strong> Validation & Correction</p>
+            <div class="layer-stack">Input: Composed Field</div>
+            <div class="layer-stack">Action: Accept/Reject/Edit</div>
+            <div class="layer-stack">Policy: Char-LSTM + Regex</div>
+            <p><strong>Goal:</strong> Validates constraints (Checksums, Length). Sends Reward signal.</p>
+        </div>
+    </div>
+
+    <h3>Collaborative Feedback Loop</h3>
+    <div class="math-block">
+        Reward(Total) = R_explorer + R_composer + R_auditor<br>
+        <br>
+        If Auditor_Reject:<br>
+          R_explorer = -5 (Penalty for bad region)<br>
+          R_composer = -2 (Penalty for bad merge)<br>
+        Else:<br>
+          R_total = +10 (Global Success)
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>3. Micro-Architecture: The Neural Network</h2>
+    <p>Each agent is powered by a Deep Reinforcement Learning model (PPO - Proximal Policy Optimization).</p>
+
+    <div class="diagram-box">
+        <h3 style="text-align:center; margin-top:0;">Shared Feature Encoder (Backbone)</h3>
+        <div style="display:flex; justify-content:center; gap:10px;">
+            <div class="layer-stack" style="background:#e8f8f5;">Node Features<br>(Text Emb + Box Coords)</div>
+            <div class="arrow">➜</div>
+            <div class="layer-stack" style="background:#d4e6f1;">Graph Convolution (GCN)<br>Layer 1 (64 dim)</div>
+            <div class="arrow">➜</div>
+            <div class="layer-stack" style="background:#d4e6f1;">Graph Attention (GAT)<br>Layer 2 (128 dim)</div>
+            <div class="arrow">➜</div>
+            <div class="layer-stack" style="background:#fdebd0;">Latent Graph<br>Representation H_v</div>
+        </div>
+
+        <hr style="margin:20px 0; border:0; border-top:1px dashed #ccc;">
+
+        <h3 style="text-align:center;">Decoupled Policy Heads (The Agents)</h3>
+        <div style="display:flex; justify-content:space-around;">
+            <div style="text-align:center;">
+                <div class="layer-stack" style="background:#fadbd8;">Explorer Head<br>(MLP -> Softmax)</div>
+                <div class="arrow">⬇</div>
+                <strong>Action: Node ID</strong>
+            </div>
+            <div style="text-align:center;">
+                <div class="layer-stack" style="background:#fcf3cf;">Composer Head<br>(Bilinear -> Sigmoid)</div>
+                <div class="arrow">⬇</div>
+                <strong>Action: Merge Bool</strong>
+            </div>
+            <div style="text-align:center;">
+                <div class="layer-stack" style="background:#d5f5e3;">Auditor Head<br>(LSTM -> Classify)</div>
+                <div class="arrow">⬇</div>
+                <strong>Action: Valid Bool</strong>
+            </div>
+        </div>
+    </div>
+
+    <h2>4. Graph Construction Logic</h2>
+    <p>The "World" our agents live in is a graph constructed from the OCR output.</p>
+    <ul>
+        <li><strong>Nodes (V):</strong> Every detected text box is a node.</li>
+        <li><strong>Edges (E):</strong> 
+            <ul>
+                <li><strong>Spatial Edges:</strong> Connect to k-Nearest Neighbors (KNN, k=5).</li>
+                <li><strong>Horizontal Edges:</strong> Connect to nodes directly to the right (reading order).</li>
+            </ul>
+        </li>
+        <li><strong>Node Features (X):</strong> `[x_center, y_center, width, height, is_numeric, is_alphanumeric, text_length]`</li>
+    </ul>
+
+    <hr>
+    <p style="text-align: center; color: #7f8c8d;">
+        <em>Architecture Diagram Generated by Jarvis | Feb 2026</em>
+    </p>
+
+</body>
+</html>

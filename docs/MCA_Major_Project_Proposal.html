@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCA Major Project Proposal</title>
+    <style>
+        @media print {
+            body { font-size: 11pt; }
+            h1 { page-break-before: avoid; }
+            h2 { page-break-after: avoid; }
+            table { page-break-inside: avoid; }
+            .no-print { display: none; }
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            color: #333;
+        }
+        h1 { color: #1a1a2e; border-bottom: 3px solid #4a69bd; padding-bottom: 10px; }
+        h2 { color: #1a1a2e; margin-top: 40px; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+        h3 { color: #4a69bd; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background: #4a69bd; color: white; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: 'SF Mono', Consolas, monospace; }
+        pre { background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        pre code { background: none; color: inherit; }
+        ul, ol { margin: 15px 0; }
+        li { margin: 5px 0; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .meta { color: #666; font-style: italic; }
+        hr { border: none; border-top: 2px solid #eee; margin: 30px 0; }
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4a69bd;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .print-btn:hover { background: #3a59ad; }
+        .checkbox { margin-right: 8px; }
+    </style>
+</head>
+<body>
+    <button class="print-btn no-print" onclick="window.print()">📄 Save as PDF</button>
+
+    <div class="header">
+        <h1>MCA Major Project Proposal</h1>
+        <h2 style="border: none; color: #4a69bd; font-size: 1.3em;">Semi-Supervised Document Field Extraction with Curriculum Learning:<br>A Reinforcement Learning Approach for Indian Bank Cheques</h2>
+        <p class="meta">
+            <strong>Prepared for:</strong> MCA Final Year Major Project<br>
+            <strong>Date:</strong> February 2026<br>
+            <strong>Duration:</strong> 3 Months
+        </p>
+    </div>
+
+    <hr>
+
+    <h2>1. Executive Summary</h2>
+    <p>This project extends existing work on Indian bank cheque OCR by introducing a novel approach combining <strong>self-supervised pre-training</strong>, <strong>reinforcement learning-based curriculum learning</strong>, and <strong>transformer-based document understanding</strong>. The goal is to achieve high accuracy in field extraction with minimal labeled data—a significant challenge in document AI.</p>
+
+    <hr>
+
+    <h2>2. Background & Problem Statement</h2>
+    
+    <h3>2.1 Previous Work (Minor Project)</h3>
+    <ul>
+        <li>Developed a labeled dataset for Indian bank cheques</li>
+        <li>Trained YOLOv11 model for field detection</li>
+        <li>Extracted key fields: MICR, Bank name, Person name, Account number, IFSC code</li>
+    </ul>
+
+    <h3>2.2 Limitations Identified</h3>
+    <ul>
+        <li>YOLO architecture not optimal for structured document understanding</li>
+        <li>Requires large labeled datasets for accuracy</li>
+        <li>No mechanism to learn from unlabeled data</li>
+        <li>Training order is random, potentially suboptimal</li>
+    </ul>
+
+    <h3>2.3 Research Gap</h3>
+    <p>How can we achieve high accuracy in document field extraction when labeled data is scarce? Can reinforcement learning optimize the training process itself?</p>
+
+    <hr>
+
+    <h2>3. Proposed Solution</h2>
+
+    <h3>3.1 Core Innovation</h3>
+    <p>A three-stage approach:</p>
+    <ol>
+        <li><strong>Self-Supervised Pre-training</strong>: Learn visual representations from unlabeled cheque images</li>
+        <li><strong>RL-based Curriculum Learning</strong>: Train an RL agent to determine optimal training sample order</li>
+        <li><strong>Transformer Fine-tuning</strong>: Fine-tune LayoutLMv3/Donut on labeled data using the learned curriculum</li>
+    </ol>
+
+    <h3>3.2 Why This Approach?</h3>
+    <table>
+        <tr><th>Component</th><th>Purpose</th><th>Benefit</th></tr>
+        <tr><td>Self-supervised pre-training</td><td>Learn from unlabeled data</td><td>Reduces labeled data requirement</td></tr>
+        <tr><td>RL curriculum learning</td><td>Optimize training order</td><td>Faster convergence, better accuracy</td></tr>
+        <tr><td>Transformer architecture</td><td>Better document understanding</td><td>State-of-the-art accuracy</td></tr>
+    </table>
+
+    <hr>
+
+    <h2>4. Technical Architecture</h2>
+
+    <h3>4.1 Model Options</h3>
+    
+    <h4>Option A: LayoutLMv3</h4>
+    <ul>
+        <li><strong>Type</strong>: Multimodal transformer (text + layout + image)</li>
+        <li><strong>Strengths</strong>: State-of-the-art for document understanding, pre-trained weights available</li>
+        <li><strong>Source</strong>: Microsoft Research</li>
+        <li><strong>Paper</strong>: "LayoutLMv3: Pre-training for Document AI with Unified Text and Image Masking"</li>
+    </ul>
+
+    <h4>Option B: Donut (Document Understanding Transformer)</h4>
+    <ul>
+        <li><strong>Type</strong>: End-to-end OCR-free document understanding</li>
+        <li><strong>Strengths</strong>: No separate OCR needed, handles structure well</li>
+        <li><strong>Source</strong>: Clova AI (NAVER)</li>
+        <li><strong>Paper</strong>: "OCR-free Document Understanding Transformer"</li>
+    </ul>
+
+    <p><strong>Recommendation</strong>: Start with LayoutLMv3 for better community support and documentation.</p>
+
+    <h3>4.2 Reinforcement Learning Framework</h3>
+
+    <h4>State Space</h4>
+    <ul>
+        <li>Current model's validation accuracy</li>
+        <li>Per-class accuracy scores</li>
+        <li>Training loss trajectory</li>
+        <li>Sample difficulty scores (based on previous predictions)</li>
+    </ul>
+
+    <h4>Action Space</h4>
+    <ul>
+        <li>Select next training sample (or batch) from the training set</li>
+        <li>Actions are discrete: choose sample index i ∈ {1, 2, ..., N}</li>
+    </ul>
+
+    <h4>Reward Function</h4>
+    <pre><code>R(t) = Δ_accuracy(t) + λ * efficiency_bonus(t)
+
+Where:
+- Δ_accuracy(t) = validation_accuracy(t) - validation_accuracy(t-1)
+- efficiency_bonus(t) = bonus for improving with fewer samples
+- λ = weighting hyperparameter</code></pre>
+
+    <h4>RL Algorithm</h4>
+    <ul>
+        <li><strong>Recommended</strong>: PPO (Proximal Policy Optimization) or DQN</li>
+        <li><strong>Why</strong>: Stable training, works well with discrete action spaces</li>
+        <li><strong>Library</strong>: Stable-Baselines3</li>
+    </ul>
+
+    <h3>4.3 Self-Supervised Pre-training</h3>
+
+    <h4>Approach: Masked Image Modeling</h4>
+    <ol>
+        <li>Collect unlabeled cheque images (target: 200-500)</li>
+        <li>Mask random patches of the image</li>
+        <li>Train model to reconstruct masked regions</li>
+        <li>Use learned representations for downstream task</li>
+    </ol>
+
+    <h4>Alternative: Contrastive Learning</h4>
+    <ul>
+        <li>Create augmented views of same cheque</li>
+        <li>Train model to recognize same cheque under different augmentations</li>
+        <li>Frameworks: SimCLR, MoCo</li>
+    </ul>
+
+    <hr>
+
+    <h2>5. Dataset</h2>
+
+    <h3>5.1 Current Labeled Dataset</h3>
+    <table>
+        <tr><th>Split</th><th>Images</th></tr>
+        <tr><td>Training</td><td>101</td></tr>
+        <tr><td>Validation</td><td>23</td></tr>
+        <tr><td>Testing</td><td>15</td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>139</strong></td></tr>
+    </table>
+
+    <h3>5.2 Required Augmentation</h3>
+
+    <h4>Data Augmentation Techniques</h4>
+    <ul>
+        <li>Rotation (±5°)</li>
+        <li>Brightness/contrast adjustment</li>
+        <li>Gaussian noise</li>
+        <li>Perspective transformation</li>
+        <li>Random cropping</li>
+    </ul>
+
+    <h4>Unlabeled Data Collection</h4>
+    <p><strong>Target</strong>: 200-500 additional unlabeled cheque images</p>
+    <p><strong>Sources</strong>:</p>
+    <ul>
+        <li>Synthetic generation using templates</li>
+        <li>Public cheque datasets (if available)</li>
+        <li>Scanned samples (with privacy considerations)</li>
+    </ul>
+
+    <hr>
+
+    <h2>6. Experimental Design</h2>
+
+    <h3>6.1 Baseline Experiments</h3>
+    <ol>
+        <li><strong>Baseline 1</strong>: YOLOv11 (your existing model)</li>
+        <li><strong>Baseline 2</strong>: LayoutLMv3 with random training order</li>
+        <li><strong>Baseline 3</strong>: LayoutLMv3 with self-supervised pre-training + random order</li>
+    </ol>
+
+    <h3>6.2 Proposed Method</h3>
+    <ol start="4">
+        <li><strong>Proposed</strong>: LayoutLMv3 + self-supervised pre-training + RL curriculum</li>
+    </ol>
+
+    <h3>6.3 Ablation Studies</h3>
+    <ul>
+        <li>Effect of self-supervised pre-training alone</li>
+        <li>Effect of RL curriculum alone</li>
+        <li>Combined effect</li>
+        <li>Impact of unlabeled data quantity</li>
+    </ul>
+
+    <h3>6.4 Evaluation Metrics</h3>
+    <ul>
+        <li><strong>Field Detection</strong>: mAP (mean Average Precision)</li>
+        <li><strong>Text Recognition</strong>: Character Error Rate (CER), Word Error Rate (WER)</li>
+        <li><strong>Per-field Accuracy</strong>: Accuracy for each field type (MICR, Account No., etc.)</li>
+        <li><strong>Training Efficiency</strong>: Accuracy vs. training steps curve</li>
+    </ul>
+
+    <hr>
+
+    <h2>7. Implementation Plan</h2>
+
+    <h3>7.1 Technology Stack</h3>
+    <table>
+        <tr><th>Component</th><th>Technology</th></tr>
+        <tr><td>Deep Learning</td><td>PyTorch</td></tr>
+        <tr><td>Transformers</td><td>HuggingFace Transformers</td></tr>
+        <tr><td>RL</td><td>Stable-Baselines3</td></tr>
+        <tr><td>Experiment Tracking</td><td>Weights & Biases / MLflow</td></tr>
+        <tr><td>Data Processing</td><td>OpenCV, PIL</td></tr>
+        <tr><td>OCR (if needed)</td><td>Tesseract / PaddleOCR</td></tr>
+    </table>
+
+    <h3>7.2 Hardware</h3>
+    <ul>
+        <li><strong>Primary</strong>: PC with RTX 3060 12GB VRAM</li>
+        <li><strong>Backup</strong>: Google Colab Pro (if needed)</li>
+    </ul>
+
+    <h3>7.3 Timeline</h3>
+    <table>
+        <tr><th>Week</th><th>Milestone</th></tr>
+        <tr>
+            <td>1-2</td>
+            <td>
+                <span class="checkbox">☐</span>Set up development environment<br>
+                <span class="checkbox">☐</span>Prepare dataset in required format<br>
+                <span class="checkbox">☐</span>Implement LayoutLMv3 baseline<br>
+                <span class="checkbox">☐</span>Run initial experiments, document baseline metrics
+            </td>
+        </tr>
+        <tr>
+            <td>3-4</td>
+            <td>
+                <span class="checkbox">☐</span>Collect/generate unlabeled cheque images<br>
+                <span class="checkbox">☐</span>Implement masked image modeling<br>
+                <span class="checkbox">☐</span>Pre-train on unlabeled data<br>
+                <span class="checkbox">☐</span>Evaluate representation quality
+            </td>
+        </tr>
+        <tr>
+            <td>5-6</td>
+            <td>
+                <span class="checkbox">☐</span>Define state, action, reward formally<br>
+                <span class="checkbox">☐</span>Implement RL environment<br>
+                <span class="checkbox">☐</span>Train curriculum learning agent<br>
+                <span class="checkbox">☐</span>Debug and validate RL training
+            </td>
+        </tr>
+        <tr>
+            <td>7-8</td>
+            <td>
+                <span class="checkbox">☐</span>Combine all components<br>
+                <span class="checkbox">☐</span>Run full experimental suite<br>
+                <span class="checkbox">☐</span>Perform ablation studies<br>
+                <span class="checkbox">☐</span>Document all results
+            </td>
+        </tr>
+        <tr>
+            <td>9-10</td>
+            <td>
+                <span class="checkbox">☐</span>Draft paper structure<br>
+                <span class="checkbox">☐</span>Write methodology section<br>
+                <span class="checkbox">☐</span>Create figures and tables<br>
+                <span class="checkbox">☐</span>Write results and analysis
+            </td>
+        </tr>
+        <tr>
+            <td>11-12</td>
+            <td>
+                <span class="checkbox">☐</span>Complete paper draft<br>
+                <span class="checkbox">☐</span>Internal review and revision<br>
+                <span class="checkbox">☐</span>Format for target venue<br>
+                <span class="checkbox">☐</span>Submit
+            </td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <h2>8. Expected Contributions</h2>
+    <ol>
+        <li><strong>Novel Framework</strong>: First application of RL-based curriculum learning for Indian bank cheque processing</li>
+        <li><strong>Semi-supervised Approach</strong>: Demonstrating effective learning with minimal labeled data</li>
+        <li><strong>Practical Impact</strong>: Applicable to banking automation in India</li>
+        <li><strong>Reproducible Research</strong>: Open-source code and methodology</li>
+    </ol>
+
+    <hr>
+
+    <h2>9. Publication Strategy</h2>
+
+    <h3>9.1 Target Venues (in order of preference)</h3>
+
+    <h4>Conferences</h4>
+    <ol>
+        <li><strong>ICDAR</strong> (International Conference on Document Analysis and Recognition)</li>
+        <li><strong>ICIP</strong> (IEEE International Conference on Image Processing)</li>
+        <li><strong>CVPR Workshops</strong> (Document Understanding)</li>
+        <li><strong>ICPR</strong> (International Conference on Pattern Recognition)</li>
+    </ol>
+
+    <h4>Journals</h4>
+    <ol>
+        <li><strong>Pattern Recognition Letters</strong> (Elsevier)</li>
+        <li><strong>Expert Systems with Applications</strong> (Elsevier)</li>
+        <li><strong>MDPI Applied Sciences</strong> (Open access, faster review)</li>
+        <li><strong>IEEE Access</strong> (Open access)</li>
+    </ol>
+
+    <h3>9.2 Paper Structure</h3>
+    <ol>
+        <li>Abstract (200 words)</li>
+        <li>Introduction</li>
+        <li>Related Work</li>
+        <li>Proposed Methodology</li>
+        <li>Experimental Setup</li>
+        <li>Results and Discussion</li>
+        <li>Conclusion</li>
+        <li>References</li>
+    </ol>
+
+    <hr>
+
+    <h2>10. Risk Assessment & Mitigation</h2>
+    <table>
+        <tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th></tr>
+        <tr><td>RL training instability</td><td>Medium</td><td>High</td><td>Use stable algorithms (PPO), extensive hyperparameter tuning</td></tr>
+        <tr><td>Insufficient unlabeled data</td><td>Medium</td><td>Medium</td><td>Synthetic data generation</td></tr>
+        <tr><td>Model doesn't fit in VRAM</td><td>Low</td><td>High</td><td>Gradient accumulation, mixed precision</td></tr>
+        <tr><td>Results not significant</td><td>Medium</td><td>High</td><td>Strong baselines, proper ablations</td></tr>
+        <tr><td>Time overrun</td><td>Medium</td><td>Medium</td><td>Weekly milestones, buffer in schedule</td></tr>
+    </table>
+
+    <hr>
+
+    <h2>11. Resources & References</h2>
+
+    <h3>Key Papers</h3>
+    <ol>
+        <li>Huang et al. "LayoutLMv3: Pre-training for Document AI with Unified Text and Image Masking" (2022)</li>
+        <li>Kim et al. "OCR-free Document Understanding Transformer" (2022) - Donut</li>
+        <li>Bengio et al. "Curriculum Learning" (2009)</li>
+        <li>Graves et al. "Automated Curriculum Learning for Neural Networks" (2017)</li>
+    </ol>
+
+    <h3>Code Repositories</h3>
+    <ul>
+        <li>LayoutLMv3: <a href="https://github.com/microsoft/unilm/tree/master/layoutlmv3">https://github.com/microsoft/unilm/tree/master/layoutlmv3</a></li>
+        <li>Donut: <a href="https://github.com/clovaai/donut">https://github.com/clovaai/donut</a></li>
+        <li>Stable-Baselines3: <a href="https://github.com/DLR-RM/stable-baselines3">https://github.com/DLR-RM/stable-baselines3</a></li>
+    </ul>
+
+    <h3>Documentation</h3>
+    <ul>
+        <li>HuggingFace LayoutLMv3: <a href="https://huggingface.co/docs/transformers/model_doc/layoutlmv3">https://huggingface.co/docs/transformers/model_doc/layoutlmv3</a></li>
+        <li>HuggingFace Donut: <a href="https://huggingface.co/docs/transformers/model_doc/donut">https://huggingface.co/docs/transformers/model_doc/donut</a></li>
+    </ul>
+
+    <hr>
+
+    <h2>12. Questions to Resolve</h2>
+    <p>Before starting implementation:</p>
+    <ol>
+        <li><strong>Unlabeled Data</strong>: Can you collect 200-500 more unlabeled cheque images?</li>
+        <li><strong>PyTorch Familiarity</strong>: Comfortable with PyTorch + HuggingFace?</li>
+        <li><strong>Supervisor Approval</strong>: Has this direction been discussed with your project guide?</li>
+        <li><strong>Existing Code</strong>: Can YOLOv11 codebase be reused for data loading?</li>
+    </ol>
+
+    <hr>
+
+    <h2>13. Next Steps</h2>
+    <ol>
+        <li><strong>Immediate</strong>: Set up environment, install dependencies</li>
+        <li><strong>This Week</strong>: Get LayoutLMv3 running on your data</li>
+        <li><strong>Week 2</strong>: Establish baseline metrics</li>
+        <li><strong>Ongoing</strong>: Weekly progress reviews</li>
+    </ol>
+
+    <hr>
+
+    <hr>
+
+    <h2>14. System Architecture Visualization</h2>
+    
+    <style>
+        .arch-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .arch-box {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            width: 140px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: relative;
+            transition: transform 0.2s;
+        }
+        .arch-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .arch-title {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .arch-desc {
+            font-size: 0.75em;
+            color: #7f8c8d;
+            line-height: 1.3;
+        }
+        .arrow-right {
+            align-self: center;
+            font-size: 20px;
+            color: #95a5a6;
+        }
+        .loop-container {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 30px;
+            border: 2px dashed #e74c3c;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+        }
+        .loop-text {
+            position: absolute;
+            bottom: -20px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.7em;
+            color: #c0392b;
+            font-weight: bold;
+        }
+        
+        /* Specific Box Colors */
+        .box-input { border-top: 3px solid #3498db; }
+        .box-ocr { border-top: 3px solid #1abc9c; }
+        .box-graph { border-top: 3px solid #f39c12; }
+        .box-rl { border-top: 3px solid #9b59b6; }
+        .box-output { border-top: 3px solid #2ecc71; background: #f0fff4; }
+    </style>
+
+    <div class="arch-container">
+        <!-- 1. Input -->
+        <div class="arch-box box-input">
+            <span class="arch-title">Input Image</span>
+            <span class="arch-desc">Unlabeled Cheque<br>(Raw Pixels)</span>
+        </div>
+
+        <div class="arrow-right">➜</div>
+
+        <!-- 2. Vision -->
+        <div class="arch-box box-ocr">
+            <span class="arch-title">Vision System</span>
+            <span class="arch-desc">EasyOCR Engine<br>Detects Text &<br>Coords</span>
+        </div>
+
+        <div class="arrow-right">➜</div>
+
+        <!-- 3. Graph -->
+        <div class="arch-box box-graph">
+            <span class="arch-title">Graph Builder</span>
+            <span class="arch-desc">Nodes = Words<br>Edges = Distance</span>
+        </div>
+
+        <div class="arrow-right">➜</div>
+
+        <!-- 4. RL Agent -->
+        <div class="arch-box box-rl">
+            <span class="arch-title">RL Agent (PPO)</span>
+            <span class="arch-desc">Policy Network<br>Traverses Graph</span>
+            <!-- Feedback Loop Visual -->
+            <div style="position:absolute; bottom:-15px; left:0; width:100%; text-align:center;">
+                <span style="font-size:12px;">⬇</span>
+            </div>
+            <div style="position:absolute; bottom:-45px; left:-50px; width:240px; height:30px; border:1px dashed #e74c3c; border-top:none; border-radius:0 0 10px 10px; pointer-events:none;"></div>
+            <div style="position:absolute; bottom:-65px; left:0; width:100%; text-align:center; color:#e74c3c; font-size:10px; font-weight:bold;">Feedback: Regex Reward</div>
+        </div>
+
+        <div class="arrow-right">➜</div>
+
+        <!-- 5. Output -->
+        <div class="arch-box box-output">
+            <span class="arch-title">Final Output</span>
+            <span class="arch-desc">Extracted JSON<br>{IFSC: "...",<br>MICR: "..."}</span>
+        </div>
+    </div>
+
+    <p style="text-align: center; margin-top: 40px; color: #666;">
+        <em>Document prepared by Jarvis</em><br>
+        <em>At your service, sir.</em>
+    </p>
+
+</body>
+</html>
