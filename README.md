@@ -1,5 +1,4 @@
-# Semi-Supervised Document Field Extraction with Curriculum Learning
-**A Reinforcement Learning Approach for Indian Bank Cheques**
+# Semi-Supervised Document Field Extraction with Curriculum Learning: A Reinforcement Learning Approach for Indian Bank Cheques
 
 > **MCA Major Project (2026)**  
 > **Status:** Phase 1 (Baseline) Completed ✅
@@ -8,28 +7,6 @@
 This project aims to solve the challenge of extracting structured data (IFSC, MICR, Account No, Payee, etc.) from Indian Bank Cheques using minimal labeled data. 
 
 **Core Innovation:** Combining **Self-Supervised Pre-training (LayoutLMv3)** with a **Reinforcement Learning (RL) Agent** that learns to "hunt" for fields in complex, noisy layouts without explicit coordinate supervision.
-
----
-
-## 🏗️ System Architecture
-
-### Phase 1: The Foundation (Current Status)
-We have established a robust Rule-Based Baseline to benchmark future AI models.
-
-```mermaid
-graph LR
-    A[Raw Cheque] --> B(Smart Loader)
-    B -- Corrects 90/180 Deg --> C[OCR Engine]
-    C --> D{Baseline Agent}
-    D -- Regex Match --> E[IFSC/MICR/Account]
-    D -- Spatial Logic --> F[Bank Name/Payee]
-    F --> G[JSON Output]
-```
-
-### Phase 2: The AI "Brain" (Upcoming)
-- **Model:** LayoutLMv3 (Microsoft)
-- **Technique:** Masked Image Modeling (MIM) on unlabeled data.
-- **RL Agent:** PPO (Proximal Policy Optimization) for active field discovery.
 
 ---
 
