@@ -1,0 +1,59 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Cheque Verify System — requirements
+#
+# Two components combined:
+#   A) Detection Pipeline : GLM-4V OCR → Line Sweep → SVM (cheque_studio.py)
+#   B) Gemma Vision Agent : Falcon Perception + Gemma 4 VLM (vision_studio.py)
+#
+# Install (inside virtualenv):
+#   pip install -r requirements.txt
+#
+# Falcon Perception (MLX — Apple Silicon only):
+#   pip install "falcon-perception[mlx] @ git+https://github.com/tiiuae/falcon-perception.git"
+#
+# GLM-4V model (~18 GB) is auto-downloaded from HuggingFace on first run.
+# Gemma 4 model is downloaded via mlx-vlm on first run.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Web / API ─────────────────────────────────────────────────────────────────
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+gradio>=5.0.0
+requests>=2.31.0
+
+# ── Vision / Image ────────────────────────────────────────────────────────────
+Pillow>=10.0.0
+numpy>=1.26.0
+opencv-python-headless>=4.8.0
+pycocotools>=2.0.7
+
+# ── GLM-OCR (0.9B, ~2 GB — replaces GLM-4V-9B 18 GB) ────────────────────────
+# Model: zai-org/GLM-OCR  (auto-downloaded from HuggingFace on first run)
+# No tiktoken required.
+torch>=2.2.0
+transformers>=4.46.0
+accelerate>=0.30.0
+
+# ── Gemma 4 + Falcon Perception (Vision Agent pipeline) ──────────────────────
+mlx-vlm>=0.1.0                     # Gemma 4 inference on Apple Silicon (MLX)
+# falcon-perception: install separately — see note above
+
+# ── Phase 1 Detection: pytesseract fallback (optional) ───────────────────────
+# pytesseract>=0.3.10               # uncomment + brew install tesseract
+# Also requires: brew install tesseract  (macOS)
+
+# ── Phase 2 Verification: classical ML + Keras CNN ──────────────────────────
+scikit-learn>=1.6.0
+scikit-image>=0.22.0
+scipy>=1.12.0
+imagehash>=4.3.1
+joblib>=1.3.0
+xgboost>=2.0.0
+
+# ── Forgery Detection (Signature_Forgery_Detection/) ────────────────────────
+# Loads cnn_sign_model.h5 in fastapi-backend/server.py and forgery_classifier.py
+tensorflow>=2.13.0
+
+# ── Hybrid OCR (EasyOCR + Gemma 4) ──────────────────────────────────────────
+# Used in detection/glm_ocr_detect.py to feed Gemma a strong text hint.
+easyocr>=1.7.1
